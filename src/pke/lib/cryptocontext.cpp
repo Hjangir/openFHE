@@ -499,7 +499,7 @@ Ciphertext<Element> CryptoContextImpl<Element>::EvalDivide(ConstCiphertext<Eleme
 //------------------------------------------------------------------------------
 
 template <typename Element>
-std::pair<BinFHEContext, LWEPrivateKey> CryptoContextImpl<Element>::EvalCKKStoFHEWSetup(
+std::pair<std::shared_ptr<lbcrypto::BinFHEContext>, LWEPrivateKey> CryptoContextImpl<Element>::EvalCKKStoFHEWSetup(
     SecurityLevel sl, BINFHE_PARAMSET slBin, bool arbFunc, uint32_t logQ, bool dynamic, uint32_t numSlotsCKKS,
     uint32_t logQswitch) {
     return GetScheme()->EvalCKKStoFHEWSetup(*this, sl, slBin, arbFunc, logQ, dynamic, numSlotsCKKS, logQswitch);
@@ -550,7 +550,8 @@ std::vector<std::shared_ptr<LWECiphertextImpl>> CryptoContextImpl<Element>::Eval
 }
 
 template <typename Element>
-void CryptoContextImpl<Element>::EvalFHEWtoCKKSSetup(const BinFHEContext& ccLWE, uint32_t numSlotsCKKS, uint32_t logQ) {
+void CryptoContextImpl<Element>::EvalFHEWtoCKKSSetup(const std::shared_ptr<BinFHEContext>& ccLWE, uint32_t numSlotsCKKS,
+                                                     uint32_t logQ) {
     GetScheme()->EvalFHEWtoCKKSSetup(*this, ccLWE, numSlotsCKKS, logQ);
 }
 
@@ -590,7 +591,7 @@ Ciphertext<Element> CryptoContextImpl<Element>::EvalFHEWtoCKKS(
 }
 
 template <typename Element>
-std::pair<BinFHEContext, LWEPrivateKey> CryptoContextImpl<Element>::EvalSchemeSwitchingSetup(
+std::pair<std::shared_ptr<lbcrypto::BinFHEContext>, LWEPrivateKey> CryptoContextImpl<Element>::EvalSchemeSwitchingSetup(
     SecurityLevel sl, BINFHE_PARAMSET slBin, bool arbFunc, uint32_t logQ, bool dynamic, uint32_t numSlotsCKKS,
     uint32_t logQswitch) {
     return GetScheme()->EvalSchemeSwitchingSetup(*this, sl, slBin, arbFunc, logQ, dynamic, numSlotsCKKS, logQswitch);
